@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Poke City</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/style.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.14.3/dist/css/uikit.min.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+
+<body>
+    <header>
+        <nav class="uk-flex uk-navbar-container uk-flex-around" uk-navbar style="background-color: rgb(255, 255, 255);">
+            <h1>Poke City</h1>
+            <div class="uk-navbar-left">
+                <ul class="uk-navbar-nav">
+                    <il class="uk_active uk-padding-small"><a href="/user/quick_options">Home</a></il>
+                    <il class="uk-padding-small"><a href="/user/order">Order ({{session.user_session_orders|length}})</a></il>
+                    <il class="uk-padding-small"><a href="/user/account/past_orders">Account</a></il>
+                    <il class="uk-padding-small"><a href="/logout">Log Out</a></il>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="uk-flex uk-border-rounded uk-margin-xlarge-left uk-margin-xlarge-right uk-flex-column uk-padding" style="border: 2px solid #696969;">
+            <div class="uk-flex uk-flex-center">
+                <h1>CRAFT-A-BURRITO</h1>
+            </div>
+            <form action="/user/send_order" method="POST">
+                <label>Method</label>
+                <select class="uk-select uk-input" type="text" name="method" id="method">
+                            <option value="{{random_burrito.method.method}}" selected>{{random_burrito.method.method}}</option>
+                            <!-- <option>Select your method</option> -->
+                            {% for m in all_methods %}
+                                <option value="">{{m.method}}</option>
+                            {% endfor %}
+                        </select>
+                <label>Size</label>
+                <select class="uk-select uk-input" type="text" name="size" id="size">
+                            <option value="{{random_burrito.size.size}}" selected>{{random_burrito.size.size}}</option>
+                            <!-- <option>Select your burrito size</option> -->
+                            {% for s in all_sizes %}
+                                <option>{{s.size}}</option>
+                            {% endfor %}
+                        </select>
+                <label>Bowl</label>
+                <select class="uk-select uk-input" type="text" name="bowl" id="bowl">
+                            <option value="{{random_burrito.bowl.bowl}}" selected>{{random_burrito.bowl.bowl}}</option>
+                            <!-- <option>Select your burrito bowl</option> -->
+                            {% for c in all_bowl %}
+                                <option>{{c.bowl}}</option>
+                            {% endfor %}
+                        </select>
+                <label>Quantity</label>
+                <select class="uk-select uk-input" type="text" name="quantity" id="quantity">
+                            {% for x in all_quantities %}
+                                <option>{{x.qty}}</option>
+                            {% endfor %}
+                        </select>
+                <div>
+                    <label>Toppings:</label> {% for t in all_toppings %} {% if t.topping == random_burrito.toppings.topping %}
+                    <label>&nbsp;&nbsp;&nbsp;{{t.topping}}</label>
+                    <input type="checkbox" id="{{random_burrito.toppings.topping}}" name="{{random_burrito.toppings.topping}}" value="{{random_burrito.toppings.topping}}" checked> {% else: %}
+                    <label>&nbsp;&nbsp;&nbsp;{{t.topping}}</label>
+                    <input type="checkbox" id={{t.topping}} name={{t.topping}} value={{t.topping}}> {% endif %} {% endfor %}
+                </div>
+                <input type="submit" value="Add To Order">
+            </form>
+        </div>
+        </div>
+    </main>
+    <footer>
+        <nav class="uk-navbar-container" uk-navbar style="background-color: rgb(255, 255, 255);">
+
+        </nav>
+
+    </footer>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+</html>

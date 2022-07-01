@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Poke City</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/style.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.14.3/dist/css/uikit.min.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+
+<body>
+    <header>
+        <nav class="uk-flex uk-navbar-container uk-flex-around" uk-navbar style="background-color: rgb(255, 255, 255);">
+            <h1>Poke City</h1>
+            <div class="uk-navbar-left">
+                <ul class="uk-navbar-nav">
+                    <il class="uk_active uk-padding-small"><a href="/user/quick_options">Home</a></il>
+                    <il class="uk-padding-small"><a href="/user/order">Order ({{session.user_session_orders|length}})</a></il>
+                    <il class="uk-padding-small"><a href="/user/account/past_orders">Account</a></il>
+                    <il class="uk-padding-small"><a href="/logout">Log Out</a></il>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="uk-flex uk-border-rounded uk-margin-xlarge-left uk-margin-xlarge-right uk-flex-column uk-padding" style="border: 2px solid  #696969;">
+            <div class="uk-flex uk-flex-center">
+                <h1>QUICK OPTIONS</h1>
+            </div>
+            <div class="uk-flex uk-flex-center uk-column-1-2-3">
+                <div class="uk-padding-small uk-border-rounded" style="border:2px solid #696969;">
+                    <form class="uk-form-stacked" action="/user/new_order">
+                        <div>
+                            <textarea class="uk-textarea uk-border-rounded uk-text-large" id="new_order" name="new_order" rows="6" readonly>It's time to build your own burrito! What are you waiting for? </textarea>
+                        </div>
+                        <div class="uk-padding-small">
+                            <input class="uk-width-1-1 uk-text-bold" type="submit" value="New Order">
+                        </div>
+                    </form>
+                </div>
+                {% if favorite_order|length
+                 <1 %} div>
+                    <textarea class="uk-textarea uk-border-rounded uk-text-large" id="favorite_order" name="favorite_order" rows="6" readonly>Go ahead and make this order your Favorite, you don't have one yet.</textarea>
+            </div>
+            {% endif %} {% for fave in favorite_order%}
+            <div class="uk-padding-small uk-border-rounded" style="border: 2px solid  #696969;">
+                <form class="uk-form-stacked" action="/user/favorite_order">
+                    <div>
+                        <textarea class="uk-textarea uk-border-rounded uk-text-large" id="favorite_order" name="favorite_order" rows="6" readonly>{{favorite_order.method}},{{favorite_order.quantity}},{{favorite_order.toppings}} Go ahead and make this order your Favorite, you don't have one yet.</textarea>
+                    </div>
+                    <div class="uk-padding-small">
+                        <input class="uk-width-1-1 uk-text-bold" type="submit" value="Re-Order My Fave">
+                    </div>
+                </form>
+            </div>
+            {% endfor %}
+
+            <div class="uk-padding-small uk-border-rounded" style="border: 2px solid  #696969;">
+                <form class="uk-form-stacked" action="/user/random_order">
+                    <div>
+                        <textarea class="uk-textarea uk-border-rounded uk-text-large" id="random_order" name="random_order" rows="6" readonly>Feeling a little adventurous or just can't decide? Either way, spice up your night with a burrito at random!</textarea>
+                    </div>
+                    <div class="uk-padding-small">
+                        <input class="uk-width-1-1 uk-text-bold" type="submit" value="Surprise Me">
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+        </div>
+    </main>
+    <footer>
+        <nav class="uk-navbar-container" uk-navbar style="background-color: rgb(255, 255, 255);">
+
+        </nav>
+
+    </footer>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+</html>
